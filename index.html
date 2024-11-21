@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>League of Legends Champions</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #111;
+            color: #f0f0f0;
+            text-align: center;
+        }
+        h1 {
+            margin-top: 50px;
+            font-size: 36px;
+            color: #ffcb00;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .loading {
+            font-size: 20px;
+            color: #ffcb00;
+            margin-top: 30px;
+        }
+        .champions-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .champion-card {
+            background-color: #2a2a2a;
+            border-radius: 10px;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+        }
+        .champion-card:hover {
+            transform: scale(1.05);
+        }
+        .champion-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        .champion-info {
+            padding: 15px;
+            background-color: #333;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+        .champion-info h3 {
+            font-size: 22px;
+            color: #ffcb00;
+            margin: 10px 0;
+        }
+        .champion-info p {
+            font-size: 16px;
+            color: #ccc;
+            margin: 10px 0;
+        }
+        .champion-info .description {
+            font-size: 14px;
+            color: #bbb;
+            margin-top: 15px;
+            text-align: left;
+        }
+        .champion-info .title {
+            font-size: 18px;
+            color: #a1a1a1;
+            font-style: italic;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>League of Legends Champions</h1>
+    <div id="loading" class="loading">Loading champions...</div>
+    <div id="champions" class="champions-container"></div>
+
+    <script>
+        // Fetch the champion data from the API
+        fetch('https://ddragon.leagueoflegends.com/cdn/14.23.1/data/en_US/champion.json')
+            .then(response => response.json())
+            .then(data => {
+                // Once the data is received, display the champions
+                const champions = data.data;
+                const championsContainer = document.getElementById('champions');
+                const loading = document.getElementById('loading');
+
+                // Remove the loading text
+                loading.style.display = 'none';
+
+                // Loop through each champion and create a card
+                for (let champion in champions) {
+                    const championInfo = champions[champion];
+                    const championCard = document.createElement('div');
+                    championCard.classList.add('champion-card');
+
+                    // Champion card content
+                    championCard.innerHTML = `
+                        <img class="champion-image" src="https://ddragon.leagueoflegends.com/cdn/14.23.1/img/champion/${championInfo.id}.png" alt="${championInfo.name}">
+                        <div class="champion-info">
+                            <h3>${championInfo.name}</h3>
+                            <p class="title">${championInfo.title}</p>
+                            <div class="description">
+                                <p><strong>Role:</strong> ${championInfo.tags.join(', ')}</p>
+                                <p><strong>Blurb:</strong> ${championInfo.blurb}</p>
+                            </div>
+                        </div>
+                    `;
+                    championsContainer.appendChild(championCard);
+                }
+            })
+            .catch(error => {
+                // Handle any errors that occur during the fetch
+                console.error('Error fetching data:', error);
+                const loading = document.getElementById('loading');
+                loading.textContent = 'Failed to load champions. Please try again later.';
+            });
+    </script>
+</body>
+</html>
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
